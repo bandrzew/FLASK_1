@@ -1,4 +1,4 @@
-i### Jak włączyć venv na Windows ###
+### Jak włączyć venv na Windows ###
 
 ## Instrukcja konfiguracji środowiska Python z Flask na Windows
 
@@ -49,6 +49,11 @@ python -m venv .venv
 **W PowerShell:**
 ```bash
 .venv\Scripts\Activate.ps1
+```
+
+** Mac / Linux **
+```bash
+source .venv/bin/activate 
 ```
 
 **Uwaga:** Jeśli w PowerShell pojawi się błąd związany z polityką wykonywania, uruchom:
