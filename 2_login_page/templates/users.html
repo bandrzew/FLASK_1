@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1>User List</h1>
+  <ul class="list-group">
+    {% for username, user in users.items() %}
+    <li class="list-group-item">
+      {{ user.name }}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
