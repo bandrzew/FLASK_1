@@ -16,8 +16,9 @@ def find_user(username, password):
         return user
     return None
 
-def generate_login_cookie():
-    return hashlib.sha256(app.secret_key.encode()).hexdigest()
+def generate_login_cookie(username):
+    data = f"{username}{app.secret_key}"
+    return hashlib.sha256(data.encode()).hexdigest()
 
 @app.route('/')
 def home():
@@ -47,15 +48,16 @@ def login_post():
     user = find_user(username, password)
     if user:
         resp = make_response(redirect(url_for('dashboard')))
-        resp.set_cookie('logged_in', generate_login_cookie())
+        resp.set_cookie('logged_in', generate_login_cookie(username))
         return resp
     return "Invalid credentials!"
 
 @app.route('/dashboard')
 def dashboard():
     logged_in_cookie = request.cookies.get('logged_in')
-    if logged_in_cookie == generate_login_cookie():
-        return render_template('dashboard.html')
+    for username, user in users.items():
+        if generate_login_cookie(username) == logged_in_cookie:
+            return render_template('dashboard.html', user=user)
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
